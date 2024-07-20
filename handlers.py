@@ -12,11 +12,13 @@ router = Router()
 @router.callback_query(F.data == "right_answer")
 async def right_answer(callback: types.CallbackQuery):
     quiz_data = get_quiz_data()
-    await callback.bot.edit_message_reply_markup(
-        chat_id=callback.from_user.id,
-        message_id=callback.message.message_id,
-        reply_markup=None
-    )
+    
+    if callback.message.reply_markup:
+        await callback.bot.edit_message_reply_markup(
+            chat_id=callback.from_user.id,
+            message_id=callback.message.message_id,
+            reply_markup=None
+        )
     print(f'Quiz_data in handlers: {quiz_data}')
     current_question_index = await get_quiz_index(callback.from_user.id)
     correct_option = quiz_data[current_question_index]['correct_option']
@@ -37,11 +39,13 @@ async def right_answer(callback: types.CallbackQuery):
 @router.callback_query(F.data == "wrong_answer")
 async def wrong_answer(callback: types.CallbackQuery):
     quiz_data = get_quiz_data()
-    await callback.bot.edit_message_reply_markup(
-        chat_id=callback.from_user.id,
-        message_id=callback.message.message_id,
-        reply_markup=None
-    )
+    
+    if callback.message.reply_markup:
+        await callback.bot.edit_message_reply_markup(
+            chat_id=callback.from_user.id,
+            message_id=callback.message.message_id,
+            reply_markup=None
+        )
 
     print(f'Quiz_data in handlers: {quiz_data}')
     
